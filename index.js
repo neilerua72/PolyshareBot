@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 const config = require("./config.json");
-const chan = require("./chan.json");
+/*const chan = require("./chan.json");*/
 const bot = new Discord.Client();
 const fs = require('fs');
-const progra = require('./progra.js');
+/*const progra = require('./progra.js');
   const description ="Liste des formation pour ce jour. Soyez à l'heure et n'oubliez pas de rejoindre le salon vocal et de couper votre micro.";
-  const title= "Les formations du jour :"
+  const title= "Les formations du jour :"*/
 
 
 
@@ -23,14 +23,61 @@ fs.readdir('./commands/',(err,files)=>{
   });
 })
 
-bot.commands.set(progra.help.name,progra);
+/*bot.commands.set(progra.help.name,progra);*/
 const PRE = config.prefix;
-const BOT = "693899604030259241";
+const BOT = "748933959194378372";
 
 bot.on("ready", function() {
   console.log("Bot opérationnel");
 });
+bot.on("message", message =>{
+  if (message.author.bot) return;
 
+  // Gestion du bot
+  if (message.channel.name === "gestion-bot") {
+    if (message.author.bot) return;
+
+      if (message.content[0] === PRE) {
+        let messageArray = message.content.split(" ");
+        let command = messageArray[0];
+        let args = messageArray.slice(1);
+
+
+        let commandFile=bot.commands.get(command.slice(PRE.length));
+        if(commandFile) commandFile.run(bot,message,args);
+        else
+          message.channel.send("Commande non trouvé, envoi un DM à l'administrateur pour qu'il voit le problème ;)")
+
+      }
+    else {
+        message.channel.send("Merci de commencer vos commandes par '!''");
+      }
+
+  }
+
+
+
+
+
+
+  // Message d'entrée
+  bot.on("guildMemberAdd", member => {
+    member
+      .createDM()
+      .then(channel => {
+        return channel.send(
+          `**Bienvenue sur le serveur du Polyshare 2020**
+La team Sponsor de Polytech et APoG te souhaitent la Bienvenue ici. Pour rappel, ce serveur servira aux échanges entre les participants lors de l'évènement. Il y aura un live youtube en parralèle afin de suivre le flux vidéos en direct (accueil, AG APoG, conférence...)
+	`
+        );
+      })
+      .catch(console.error);
+  });
+
+
+
+})
+/*
 bot.on("message", message => {
   let commandFile=bot.commands.get("divers");
   let args="";
@@ -63,7 +110,7 @@ bot.on("message", message => {
               {name: "A 16h :", value:bot.channels.resolve(chan.C17).toString()+ "et "+bot.channels.resolve(chan.C09).toString() + "(Pour les clubs)"},
 							{name: "A 18h30 :", value:bot.channels.resolve(chan.C24).toString()+ "et "+bot.channels.resolve(chan.C25).toString()},
 						);
-					
+
 						message.channel.send(messageEmbed)
 
 
@@ -92,11 +139,10 @@ Si tu as la moindre question, n'hésite pas à m'envoyer un message ici. Les adm
     })
     .catch(console.error);
 });*/
-
+/*
 setInterval(function() {
   let commandFile=bot.commands.get("progra");
   if(commandFile) commandFile.run(bot);
-}, 60000);
+}, 60000);*/
 
-bot.login('NjkzODk5NjA0MDMwMjU5MjQx.XoX-iw.0s7oqOKfTYszDZhU9699VhCfdgg')
-
+bot.login('NzQ4OTMzOTU5MTk0Mzc4Mzcy.X0kpGg.7PwhUSwYO2cIBFGSQNjS2AU_LDw')
