@@ -30,6 +30,7 @@ const BOT = "748933959194378372";
 bot.on("ready", function() {
   console.log("Bot opérationnel");
 });
+
 bot.on("message", message =>{
   if (message.author.bot) return;
 
@@ -49,34 +50,69 @@ bot.on("message", message =>{
           message.channel.send("Commande non trouvé, envoi un DM à l'administrateur pour qu'il voit le problème ;)")
 
       }
-    else {
+    else if(message.content[0] === "?") {
+      messageEmbed = new Discord.MessageEmbed()
+                .setColor('#009CDD')
+                 .setTitle(`**Bienvenue sur le serveur du Polyshare 2020**`)
+                 .setThumbnail('https://zupimages.net/up/20/41/oauq.png')
+                 .setDescription(`La team Sponsor de Polytech et APoG te souhaitent la bienvenue ici. Ce serveur est dédié aux échanges entre les participants. 
+
+
+Rends toi sur le lien suivant (https://discord.com/invite/9QWgCSe), pour trouver différentes "salles". Tu pourras choisir ta salle **en fonction du sujet** qui t'intéresse. Par exemple, le canal `+bot.channels.resolve("759827229789257749").toString()+` te permettra d'échanger **à l'écrit** sur ce sujet. Les canaux notifiés d'un symbole :loud_sound: sont des salles qui te permettront d'échanger seulement **à l'oral**, donc branche ton casque et rejoins nous !
+
+
+Si tu as perdu le lien pour suivre la vidéo en direct, c'est par ici : https://youtu.be/aiWohjjMwww ! 
+
+
+_PS : réponds à ce message en envoyant ton nom, prénom et filière, afin que l'on puisse savoir si tu es adhérent et que l'on colore ton prénom en fonction de ta filière !_ :wink: 
+
+A bientôt `);
+                 message.channel.send(messageEmbed)
+
+
+    }
+
+    else{
         message.channel.send("Merci de commencer vos commandes par '!''");
       }
 
   }
 
+  if (message.channel.type === "dm"){
+   if(message.author.bot) return;
+   messageEmbed = new Discord.MessageEmbed()
+  						.setTitle("Message de " +  message.author.username + " | ID : "+message.author.id)
+  						.setDescription(message.content);
 
-
-
-
-
-  // Message d'entrée
-  bot.on("guildMemberAdd", member => {
-    member
-      .createDM()
-      .then(channel => {
-        return channel.send(
-          `**Bienvenue sur le serveur du Polyshare 2020**
-La team Sponsor de Polytech et APoG te souhaitent la Bienvenue ici. Pour rappel, ce serveur servira aux échanges entre les participants lors de l'évènement. Il y aura un live youtube en parralèle afin de suivre le flux vidéos en direct (accueil, AG APoG, conférence...)
-	`
-        );
-      })
-      .catch(console.error);
-  });
-
-
-
+   bot.channels.resolve("762725996729335819").send(messageEmbed);
+ }
 })
+// Message d'entrée
+bot.on("guildMemberAdd", member => {
+  member
+    .createDM()
+    .then(channel => {
+      console.log("Je suis passé ici")
+				messageEmbed = new Discord.MessageEmbed()
+                .setColor('#009CDD')
+                 .setTitle(`**Bienvenue sur le serveur du Polyshare 2020**`)
+                 .setThumbnail('https://zupimages.net/up/20/41/oauq.png')
+                 .setDescription(`La team Sponsor de Polytech et APoG te souhaitent la bienvenue ici. Ce serveur est dédié aux échanges entre les participants. 
+
+
+Rends toi sur le lien suivant (https://discord.com/invite/9QWgCSe), pour trouver différentes "salles". Tu pourras choisir ta salle **en fonction du sujet** qui t'intéresse. Par exemple, le canal `+bot.channels.resolve("759827229789257749").toString()+` te permettra d'échanger **à l'écrit** sur ce sujet. Les canaux notifiés d'un symbole :loud_sound: sont des salles qui te permettront d'échanger seulement **à l'oral**, donc branche ton casque et rejoins nous !
+
+
+Si tu as perdu le lien pour suivre la vidéo en direct, c'est par ici : https://youtu.be/aiWohjjMwww ! 
+
+
+_PS : réponds à ce message en envoyant ton nom, prénom et filière, afin que l'on puisse savoir si tu es adhérent et que l'on colore ton prénom en fonction de ta filière !_ :wink: 
+
+A bientôt `);
+      return channel.send(messageEmbed);
+    })
+    .catch(console.error);
+});
 /*
 bot.on("message", message => {
   let commandFile=bot.commands.get("divers");
