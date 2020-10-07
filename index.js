@@ -181,4 +181,4 @@ setInterval(function() {
   if(commandFile) commandFile.run(bot);
 }, 60000);*/
 
-bot.login('NzQ4OTMzOTU5MTk0Mzc4Mzcy.X0kpGg.7PwhUSwYO2cIBFGSQNjS2AU_LDw')
+bot.login(process.env.TOKEN)
